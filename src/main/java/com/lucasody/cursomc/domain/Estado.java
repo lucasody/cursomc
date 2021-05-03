@@ -22,7 +22,7 @@ public class Estado implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	@JsonBackReference
+	@JsonBackReference //cidade serializa estado
 	@OneToMany(mappedBy="estado")
 	private List<Cidade> cidades = new ArrayList<>(); // estado tem várias cidades
 
