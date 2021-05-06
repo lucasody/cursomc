@@ -22,24 +22,31 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/{id}", method=RequestMethod.GET) //Solicita categoria/id
 	public ResponseEntity<Categoria> find(@PathVariable Integer id){
 		
 		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);				
 	}
 	
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(method=RequestMethod.POST) //Cria categoria no proximo Id disponível
 	public ResponseEntity<Void> insert(@RequestBody Categoria obj){
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT) // Atualiza a categoria
 	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
 		obj.setId(id);
 		obj =service.update(obj);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE) //Deleta Categoria/id
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
+		
+		service.delete(id);
+		return ResponseEntity.noContent().build();			
 	}
 }
